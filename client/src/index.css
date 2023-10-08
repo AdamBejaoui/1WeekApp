@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.bg-search-bg-image {
+    background-image: url("https://img.rasset.ie/000f4e97-1440.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; /* Adjust as needed */
+    background-position: center top; /* Adjust to control the vertical position */
+    height: 300px; /* Adjust the height as needed */
+    box-shadow: black; 
+  }
+
+ body {
+  background-color: #f2f2f2;
+  font-family: 'RobotoDraft', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h5 {
+  margin: 0px;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+p {
+  font-size: 12px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14em, 1fr)); /* Adjust the width as needed */
+  gap: 50px; /* Adjust the spacing between cards as needed */
+  border-bottom: 1px solid #ccc; /* Add a border between rows of cards */
+  padding-bottom: 16px; /* Add some space for the border */
+  margin-left: 200px;
+  margin-top: 120px;
+}
+
+.property-card {
+  height: 18em;
+  width: 14em;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 15px 15px 27px #000000, -15px -15px 27px #000000;
+}
+
+/* Top Half of card, image. */
+
+.property-image {
+  position: relative;
+  height: 18em; /* Updated height to show image initially */
+  width: 14em;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.property-image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Bottom Card Section */
+
+.property-description {
+  background-color: #FAFAFC;
+  height: 0em; /* Initially hidden */
+  width: 14em;
+  position: absolute;
+  bottom: 0em;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  padding: 0.5em 1em;
+  text-align: center;
+}
+
+/* Social Icons */
+
+.property-social-icons {
+  width: 5em;
+  height: 1.5em;
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Property Cards Hover States */
+
+.property-card:hover .property-description {
+  height: 12em; /* Display the bottom card section on hover */
+  padding: 0.5em 1em;
+}
+
+.property-card:hover .property-image {
+  height: 6em; /* Shrink the image on hover */
+}
+
+.property-card:hover .property-social-icons {
+  background-color: white;
+}
+
+.property-card:hover .property-social-icons:hover {
+  cursor: pointer;
+}
