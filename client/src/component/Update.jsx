@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Dropdown, Navbar, Avatar } from "flowbite-react";
 import axios from "axios";
-// import cloudinary from "cloudinary"
 
-// cloudinary.config({
-  // cloud_name: "1WeekApp",
-  // api_key: "431594815331411",
-  // api_secret: "HwYHUYsfh77tyCu9vVYZeDuXTj4",
-// });
-
-export default function Add() {
-  const [book, setbook] = useState({
+export default function Update() {
+const [book, setbook] = useState({
     title: "",
     desc: "",
     cover: "",
@@ -19,6 +12,10 @@ export default function Add() {
   console.log(book)
 
   const navigate = useNavigate();
+  const location = useLocation()
+
+
+  const bookId = location.pathname.split("/")[2]
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -29,29 +26,14 @@ export default function Add() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/books", book);
+      await axios.put("http://localhost:5000/books/"+bookId,book);
       navigate("/Yourbooks");
     } catch (err) {
       console.log(err);
     }
   };
 
- 
-
-  // const handleFileUpload = async (e) => {
-  //   const file = e.target.files[0];
   
-  //   // Upload the image to Cloudinary
-  //   const result = await cloudinary.uploader.upload(file);
-  
-  //   // Get the secure URL of the uploaded image
-  //   const imageUrl = result.secure_url;
-  
-  //   // Set the image URL in your state
-  //   setbook((prev) => ({ ...prev, cover: imageUrl }));
-  // };
-
-
 
   return (
     <div>
@@ -97,8 +79,8 @@ export default function Add() {
           </Navbar.Collapse>
         </div>
       </Navbar>
-      <div className="flex justify-center items-center h-screen">
-        <div >
+      <div className="flex justify-center items-center h-screen" style={{ backgroundColor: '#F2F2F2' }}>
+        <div style={{ backgroundColor: '#F2F2F2' }}>
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0"></div>
           </div>
@@ -149,6 +131,7 @@ export default function Add() {
                     </p>
                   </div>
                   <div>
+                    <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Cover photo
                     </label>
@@ -165,6 +148,7 @@ export default function Add() {
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
@@ -172,7 +156,7 @@ export default function Add() {
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     onClick={handleClick}
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </div>

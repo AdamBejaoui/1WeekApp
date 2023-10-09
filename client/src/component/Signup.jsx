@@ -1,25 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Link ,useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const [values, setValues] = useState({ name: "", email: "", password: "" });
-  const generateError = (error) =>
-    toast.error(error, {
-      position: "bottom-right",
-    });
-
-  const handleSubmit = async (e) => {
+  const [values, setValues] = useState({ username: "", email: "", password: "" });
+  const navigate = useNavigate()
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios.post("http://localhost:3001/signup", {
-        ...values,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    axios.post("http://localhost:5000/signup", values)
+    .then((res) => {
+      if (res.data.Status === "Added") {
+        navigate("/");
+      } else {
+        alert("Server Error: " + JSON.stringify(res.data)); // Log the error
+      }
+    })
+    .catch((err) => console.log(err));
+      
+  }
 
   return (
       <section style={{ backgroundColor: "rgb(51, 51, 51)" }}>
@@ -46,20 +44,20 @@ function Signup() {
               <form onSubmit={handleSubmit}>
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="username"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Name
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="username"
+                    id="username"
                     placeholder="Enter your name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                     onChange={(e) =>
-                      setValues({ ...values, [e.target.name]: e.target.value })
+                      setValues({ ...values, username : e.target.value })
                     }
                   />
                 </div>
@@ -78,7 +76,7 @@ function Signup() {
                     placeholder="name@company.com"
                     required
                     onChange={(e) =>
-                      setValues({ ...values, [e.target.name]: e.target.value })
+                      setValues({ ...values, email: e.target.value })
                     }
                   />
                 </div>
@@ -97,7 +95,7 @@ function Signup() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                     onChange={(e) =>
-                      setValues({ ...values, [e.target.name]: e.target.value })
+                      setValues({ ...values, password: e.target.value })
                     }
                   />
                 </div>

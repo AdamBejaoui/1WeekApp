@@ -1,11 +1,32 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Dropdown, Navbar, Avatar } from "flowbite-react";
+import {useNavigate} from "react-router-dom"
 import Books from "./Books";
 import axios from "axios";
 export default function Home() {
 
 const [search, setSearch] = useState("")
 const [bookData, setData] = useState([])
+const [auth, setAuth] = useState(false)
+const [name, setName] = useState({ username: "", email: "" });
+
+const navigate = useNavigate()
+
+
+useEffect(() => {
+axios.get('http://localhost:5000/data').then((res) => {
+    if(res.data.Status === "success") {
+      setAuth(true);
+      setName(res.data.username)
+      navigate('/Home');
+    }else {
+      setAuth(false);
+    }
+
+}).then((err) => console.log(err))
+}, []);
+
+
 
 const searchBook = (e) => {
   e.preventDefault()
@@ -50,13 +71,13 @@ const searchBook = (e) => {
             }
           >
             <Dropdown.Header>
-              <span>user name</span>
+              <span>
+              </span>
               <span className="block truncate text-sm font-medium">
-                email@email.com
               </span>
             </Dropdown.Header>
             <p>Settings</p>
-            <Dropdown.Divider />
+            <Dropdown.Divider href="/" />
             <p className="hover:cursor-pointer">Sign out
             </p>
           </Dropdown>
@@ -64,12 +85,12 @@ const searchBook = (e) => {
         </div>
         <div >
           <Navbar.Collapse className="text-center">
-            <Navbar.Link active href="#">
+            <Navbar.Link active href="/Home">
               <p >
                 Home
               </p>
             </Navbar.Link>
-            <Navbar.Link href="#">List</Navbar.Link>
+            <Navbar.Link href="/List">List</Navbar.Link>
             <Navbar.Link href="/Add">Add</Navbar.Link>
             <Navbar.Link href="/Yourbooks">Your Books</Navbar.Link>
           </Navbar.Collapse>
